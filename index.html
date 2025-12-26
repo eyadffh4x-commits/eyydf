@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Future Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: #0f0c29;
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* الكرات المتحركة في الخلفية */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: #ff00cc;
+            top: -50px;
+            right: -50px;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: #3333ff;
+            bottom: -100px;
+            left: -100px;
+            animation-delay: 2s;
+        }
+
+        /* الكارت الزجاجي */
+        .card {
+            position: relative;
+            z-index: 10;
+            width: 350px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            transition: 0.5s;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.6);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* تأثير اللمعان عند التحرك */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+            background: url('https://api.dicebear.com/7.x/avataaars/svg?seed=Gemini') center/cover;
+            box-shadow: 0 0 20px rgba(255, 0, 204, 0.5);
+        }
+
+        h2 {
+            color: #fff;
+            font-size: 2em;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        p {
+            color: #ccc;
+            font-size: 1em;
+            margin: 10px 0 25px 0;
+        }
+
+        .btn {
+            padding: 10px 30px;
+            background: linear-gradient(45deg, #ff00cc, #3333ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(51, 51, 255, 0.5);
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 0, 204, 0.8);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="card" id="tiltCard">
+        <div class="profile-img"></div>
+        <h2>المستقبل هنا</h2>
+        <p id="typing-text">مصمم مواقع | مطور ذكاء اصطناعي</p>
+        <button class="btn" onclick="glowEffect()">تواصل معي</button>
+    </div>
+
+    <script>
+        // حركة النص (Typing Effect)
+        const textElement = document.getElementById('typing-text');
+        const texts = ["مصمم مواقع محترف", "مطور واجهات", "عاشق للذكاء الاصطناعي"];
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
+
+        (function type() {
+            if (count === texts.length) {
+                count = 0;
+            }
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+            
+            textElement.textContent = letter;
+            if (letter.length === currentText.length) {
+                count++;
+                index = 0;
+                setTimeout(type, 2000); // استنى ثانيتين قبل الكلمة اللي بعدها
+            } else {
+                setTimeout(type, 100);
+            }
+        }());
+
+        // تأثير بسيط عند الضغط
+        function glowEffect() {
+            const card = document.querySelector('.card');
+            card.style.borderColor = '#ff00cc';
+            setTimeout(() => {
+                card.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+            }, 500);
+            alert("أهلاً بيك في عالم Gemini! 🚀");
+        }
+    </script>
+</body>
+</html>
